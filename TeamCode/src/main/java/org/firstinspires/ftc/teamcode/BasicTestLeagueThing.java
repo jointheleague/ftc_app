@@ -35,7 +35,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.robotcontroller.external.samples.SensorDigitalTouch;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @TeleOp(name="Basic: League Test Drive", group="Iterative Opmode")
 public class BasicTestLeagueThing extends OpMode {
@@ -47,6 +51,9 @@ public class BasicTestLeagueThing extends OpMode {
     private DcMotor rightRear = null;   // blue
 
     private CRServo clawServo = null;
+    private CRServo armMotor = null;
+
+    private DigitalChannel armStop = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -64,6 +71,10 @@ public class BasicTestLeagueThing extends OpMode {
         rightRear = hardwareMap.get(DcMotor.class, "rightRear");
 
         clawServo = hardwareMap.get(CRServo.class, "clawServo");
+        armMotor = hardwareMap.get(CRServo.class, "armMotor");
+
+        armStop = hardwareMap.get(DigitalChannel.class, "armStop");
+        armStop.setMode(DigitalChannel.Mode.INPUT);
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -78,6 +89,7 @@ public class BasicTestLeagueThing extends OpMode {
         rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         clawServo.setDirection(CRServo.Direction.FORWARD);
+        armMotor.setDirection(CRServo.Direction.FORWARD);
 
         // while the power of the wheels is 0, brake
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -169,6 +181,19 @@ public class BasicTestLeagueThing extends OpMode {
         } else {
             clawServo.setPower(0);
         }
+
+        // control arm
+        if (gamepad1.dpad_up) {
+            armMotor.setPower(0.5);
+        } else if (gamepad1.dpad_down && armStop.getState()) {
+            armMotor.setPower(-0.5);
+        } else {
+            armMotor.setPower(0);
+        }
+
+
+        // write touch sensor control to screen
+        telemetry.addData("Touch Sensor", armStop.getState());
 
     }
 
