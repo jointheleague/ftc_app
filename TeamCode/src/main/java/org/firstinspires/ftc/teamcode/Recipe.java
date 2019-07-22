@@ -36,13 +36,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="Basic: Template", group="Iterative Opmode")
-public class BasicTeleopTemplate extends OpMode {
-
-    /*
-     * Create position and delta variables inside TeleOp class
-     * create DcMotors, controllers, and servos
-     */
-
+public class Recipe extends OpMode {
 
     @Override
     public void init() {
@@ -51,11 +45,9 @@ public class BasicTeleopTemplate extends OpMode {
          * Code to run ONCE when the driver hits INIT
          */
 
-        /*
-         * Initialize motors, servos, and controllers with hardwareMap
-         */
+        //the Telemetry function prints information to the Driver Station
+        telemetry.addData("Status", "Initializing");
     }
-
 
     @Override
     public void init_loop() {
@@ -64,12 +56,7 @@ public class BasicTeleopTemplate extends OpMode {
          * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
          */
 
-        /*
-         * Set initial servo positions
-         */
-
     }
-
 
     @Override
     public void start() {
@@ -80,7 +67,6 @@ public class BasicTeleopTemplate extends OpMode {
 
     }
 
-
     @Override
     public void loop() {
 
@@ -88,23 +74,17 @@ public class BasicTeleopTemplate extends OpMode {
          * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
          */
 
-        /*
-         * Set controls on gamepads and update/set position of servos with delta variables
-         *
+        /*1. Use telemetry() to print outputs of a button, Dpad, and joystick from gamepad1. It will
+         * continuously update because it is in loop()
          */
 
     }
-
 
     @Override
     public void stop() {
 
         /*
          * Code to run ONCE after the driver hits STOP
-         */
-
-        /*
-         * Stop all motion
          */
 
     }
