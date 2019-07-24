@@ -46,15 +46,18 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class BasicTestLeagueThing extends OpMode {
 
     // Declare OpMode members.
-    private DcMotor leftFront = null;   // white
-    private DcMotor leftRear = null;    // yellow
-    private DcMotor rightFront = null;  // green
-    private DcMotor rightRear = null;   // blue
+    private DcMotor leftFront = null;   // white - port 2
+    private DcMotor leftRear = null;    // yellow - port 1
+    private DcMotor rightFront = null;  // green - port 3
+    private DcMotor rightRear = null;   // blue - port 0
 
     private Servo clawServo = null;
     private CRServo armMotor = null;
 
     private DigitalChannel armStop = null;
+
+    private double clawPos;
+    private final double clawIncrement = 0.02;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -71,9 +74,14 @@ public class BasicTestLeagueThing extends OpMode {
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
         rightRear = hardwareMap.get(DcMotor.class, "rightRear");
 
+
+        // servos
         clawServo = hardwareMap.get(Servo.class, "clawServo");
         armMotor = hardwareMap.get(CRServo.class, "armMotor");
 
+        clawPos = clawServo.getPosition();
+
+        // arm touch sensor
         armStop = hardwareMap.get(DigitalChannel.class, "armStop");
         armStop.setMode(DigitalChannel.Mode.INPUT);
 
@@ -128,16 +136,6 @@ public class BasicTestLeagueThing extends OpMode {
 
         // This driving mode uses left stick to go forward, and right stick to turn.
         // - This uses basic math to combine motions and is easier to drive straight.
-//        double drive = -gamepad1.left_stick_y;
-//        double turn  =  gamepad1.right_stick_x;
-//        leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-//        rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
-//
-//        // Send calculated power to wheels
-//        leftFront.setPower(leftPower);
-//        leftRear.setPower(leftPower);
-//        rightFront.setPower(rightPower);
-//        rightRear.setPower(rightPower);
 
         // strafing control
 
@@ -153,16 +151,6 @@ public class BasicTestLeagueThing extends OpMode {
         double driveX = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
 
-//        double leftFrontDrive = Range.clip(driveY + driveX, -1.0, 1.0);
-//        double leftRearDrive = Range.clip(driveY - driveX, -1.0, 1.0);
-//        double rightFrontDrive = Range.clip(driveY - driveX, -1.0, 1.0);
-//        double rightRearDrive = Range.clip(driveY + driveX, -1.0, 1.0);
-//
-//        double leftFrontPower = Range.clip(leftFrontDrive + turn, -1.0, 1.0);
-//        double leftRearPower = Range.clip(leftRearDrive + turn, -1.0, 1.0);
-//        double rightFrontPower = Range.clip(rightFrontDrive - turn, -1.0, 1.0);
-//        double rightRearPower = Range.clip(rightRearDrive - turn, -1.0, 1.0);
-
         // ^ condensed
         double leftFrontPower = Range.clip((driveY + driveX) + turn, -1.0, 1.0);
         double leftRearPower = Range.clip((driveY - driveX) + turn, -1.0, 1.0);
@@ -175,13 +163,13 @@ public class BasicTestLeagueThing extends OpMode {
         rightRear.setPower(rightRearPower / control);
 
         // controlling the claw
-        if        (gamepad1.dpad_right) {
-                clawServo.setPosition(1);
+
+        if (gamepad1.dpad_right) {
+            clawPos = Range.clip(clawPos + clawIncrement, -1.0, 1.0);
         } else if (gamepad1.dpad_left) {
-            clawServo.setPosition(0);
-        } else {
-            clawServo.setPosition(.5);
+            clawPos = Range.clip(clawPos - clawIncrement, -1.0, 1.0);
         }
+        clawServo.setPosition(clawPos);
 
         // control arm
         if (gamepad1.dpad_up) {
@@ -208,8 +196,7 @@ public class BasicTestLeagueThing extends OpMode {
         leftRear.setPower(0);
         rightFront.setPower(0);
         rightRear.setPower(0);
-        armMotor.setPower(0);
-        clawServo.setPosition(0);
+
     }
 
 }

@@ -29,12 +29,14 @@
 
 package org.firstinspires.ftc.teamcode.section1;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
+@Disabled
 @TeleOp(name="Basic: Template", group="Iterative Opmode")
 public class BasicTeleopTemplate extends OpMode {
 
