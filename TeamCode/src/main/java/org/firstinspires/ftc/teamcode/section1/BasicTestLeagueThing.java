@@ -42,7 +42,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorDigitalTouch;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-@TeleOp(name="Basic: League Test Drive", group="Iterative Opmode")
+@TeleOp(name = "Basic: League Test Drive", group = "Iterative Opmode")
 public class BasicTestLeagueThing extends OpMode {
 
     // Declare OpMode members.
@@ -73,6 +73,7 @@ public class BasicTestLeagueThing extends OpMode {
         leftRear = hardwareMap.get(DcMotor.class, "leftRear");
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
         rightRear = hardwareMap.get(DcMotor.class, "rightRear");
+
 
         // servos
         clawServo = hardwareMap.get(Servo.class, "clawServo");
@@ -163,6 +164,7 @@ public class BasicTestLeagueThing extends OpMode {
         rightRear.setPower(rightRearPower / control);
 
         // controlling the claw
+
         if (gamepad1.dpad_right) {
             clawPos += clawIncrement;
         } else if (gamepad1.dpad_left) {
@@ -197,6 +199,7 @@ public class BasicTestLeagueThing extends OpMode {
         leftRear.setPower(0);
         rightFront.setPower(0);
         rightRear.setPower(0);
+
     }
 
 }
