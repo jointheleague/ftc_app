@@ -135,16 +135,6 @@ public class BasicTestLeagueThing extends OpMode {
 
         // This driving mode uses left stick to go forward, and right stick to turn.
         // - This uses basic math to combine motions and is easier to drive straight.
-//        double drive = -gamepad1.left_stick_y;
-//        double turn  =  gamepad1.right_stick_x;
-//        leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-//        rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
-//
-//        // Send calculated power to wheels
-//        leftFront.setPower(leftPower);
-//        leftRear.setPower(leftPower);
-//        rightFront.setPower(rightPower);
-//        rightRear.setPower(rightPower);
 
         // strafing control
 
@@ -159,16 +149,6 @@ public class BasicTestLeagueThing extends OpMode {
         double driveY = -gamepad1.left_stick_y;
         double driveX = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
-
-//        double leftFrontDrive = Range.clip(driveY + driveX, -1.0, 1.0);
-//        double leftRearDrive = Range.clip(driveY - driveX, -1.0, 1.0);
-//        double rightFrontDrive = Range.clip(driveY - driveX, -1.0, 1.0);
-//        double rightRearDrive = Range.clip(driveY + driveX, -1.0, 1.0);
-//
-//        double leftFrontPower = Range.clip(leftFrontDrive + turn, -1.0, 1.0);
-//        double leftRearPower = Range.clip(leftRearDrive + turn, -1.0, 1.0);
-//        double rightFrontPower = Range.clip(rightFrontDrive - turn, -1.0, 1.0);
-//        double rightRearPower = Range.clip(rightRearDrive - turn, -1.0, 1.0);
 
         // ^ condensed
         double leftFrontPower = Range.clip((driveY + driveX) + turn, -1.0, 1.0);
