@@ -107,6 +107,7 @@ public class BasicTestLeagueThing extends OpMode {
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
+        telemetry.addData("Claw position", "%4.2f", clawPos);
     }
 
     /*
@@ -163,11 +164,13 @@ public class BasicTestLeagueThing extends OpMode {
 
         // controlling the claw
         if (gamepad1.dpad_right) {
-            clawPos = Range.clip(clawPos + clawIncrement, -1.0, 1.0);
+            clawPos += clawIncrement;
         } else if (gamepad1.dpad_left) {
-            clawPos = Range.clip(clawPos - clawIncrement, -1.0, 1.0);
+            clawPos -= clawIncrement;
         }
+        clawPos = Range.clip(clawPos, 0.0, 1.0);
         clawServo.setPosition(clawPos);
+        telemetry.addData("Claw position", "%4.2f", clawPos);
 
         // control arm
         if (gamepad1.dpad_up) {
