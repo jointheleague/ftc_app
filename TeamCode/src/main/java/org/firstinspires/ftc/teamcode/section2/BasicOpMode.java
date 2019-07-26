@@ -29,11 +29,13 @@
 
 package org.firstinspires.ftc.teamcode.section2;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
 @TeleOp(name="Basic: Telemetry", group="Iterative Opmode")
+@Disabled
 public class BasicOpMode extends OpMode {
 
     @Override

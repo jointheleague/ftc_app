@@ -1,10 +1,12 @@
-package org.firstinspires.ftc.teamcode.section4;
+package org.firstinspires.ftc.teamcode.section3;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="Basic: Autonomous", group="Linear Opmode")
-public class AutonomousOpmode extends LinearOpMode {
+@Autonomous(name="Basic: Move to Target", group="Linear Opmode")
+@Disabled
+public class AutonomousMoveToTarget extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
