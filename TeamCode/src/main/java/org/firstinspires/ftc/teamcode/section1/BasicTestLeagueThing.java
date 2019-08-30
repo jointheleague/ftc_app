@@ -38,15 +38,17 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.I2cAddressableDevice;
+import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.util.TypeConversion;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorDigitalTouch;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @TeleOp(name = "Basic: League Test Drive", group = "Iterative Opmode")
-@Disabled
 public class BasicTestLeagueThing extends OpMode {
 
     // Declare OpMode members.
@@ -60,6 +62,8 @@ public class BasicTestLeagueThing extends OpMode {
     private DistanceSensor sensorRange = null;
 
     private DigitalChannel armStop = null;
+
+    private I2cAddressableDevice armEncoder = null;
 
     private double clawPos;
     private final double clawIncrement = 0.02;
@@ -84,7 +88,8 @@ public class BasicTestLeagueThing extends OpMode {
         clawServo = hardwareMap.get(Servo.class, "clawServo");
         armMotor = hardwareMap.get(CRServo.class, "armMotor");
 
-        clawPos = clawServo.getPosition();
+        // clawPos = clawServo.getPosition();
+        clawPos = 0.5;
 
         // arm touch sensor
         armStop = hardwareMap.get(DigitalChannel.class, "armStop");
@@ -92,6 +97,9 @@ public class BasicTestLeagueThing extends OpMode {
 
         // REV Robotics IR 2m Sensor
         sensorRange = hardwareMap.get(DistanceSensor.class, "sensor_range");
+
+        // Trying to connect to arm motor's I2C encoder
+        armEncoder = hardwareMap.get(I2cAddressableDevice.class, "armEncoder");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -124,6 +132,7 @@ public class BasicTestLeagueThing extends OpMode {
      */
     @Override
     public void init_loop() {
+        clawServo.setPosition(clawPos);
     }
 
     /*
@@ -148,6 +157,17 @@ public class BasicTestLeagueThing extends OpMode {
         final double MID_RANGE = 12.0;
         final double MIN_SPEED = 0.125;
         final double MIN_RANGE = 1.0;
+
+        // ***
+        byte armPositionByte;
+        int armPosition;
+
+        // *** Let's see if we can read the encoder value from arm motor
+        telemetry.addData("Arm's I2C Address: ", armEncoder.getI2cAddress().get8Bit());
+        telemetry.addData("Left Rear's conncection info: ", leftRear.getController().getConnectionInfo());
+        // armPositionByte = armEncoder.(0x4c);
+        // armPosition = TypeConversion.unsignedByteToInt(armPositionByte);
+        // telemetry.addData("Arm's position: ", "%4d", armPosition);
 
         // This driving mode uses left stick to go forward, and right stick to turn.
         // - This uses basic math to combine motions and is easier to drive straight.
@@ -229,6 +249,9 @@ public class BasicTestLeagueThing extends OpMode {
         leftRear.setPower(0);
         rightFront.setPower(0);
         rightRear.setPower(0);
+
+        // Return claw to normal position
+        clawServo.setPosition(0.5);
 
     }
 
