@@ -63,7 +63,7 @@ public class BasicTestLeagueThing extends OpMode {
 
     private DigitalChannel armStop = null;
 
-    private I2cAddressableDevice armEncoder = null;
+//    private I2cAddressableDevice armEncoder = null;
 
     private double clawPos;
     private final double clawIncrement = 0.02;
@@ -99,7 +99,7 @@ public class BasicTestLeagueThing extends OpMode {
         sensorRange = hardwareMap.get(DistanceSensor.class, "sensor_range");
 
         // Trying to connect to arm motor's I2C encoder
-        armEncoder = hardwareMap.get(I2cAddressableDevice.class, "armEncoder");
+//        armEncoder = hardwareMap.get(I2cAddressableDevice.class, "armEncoder");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -163,8 +163,8 @@ public class BasicTestLeagueThing extends OpMode {
         int armPosition;
 
         // *** Let's see if we can read the encoder value from arm motor
-        telemetry.addData("Arm's I2C Address: ", armEncoder.getI2cAddress().get8Bit());
-        telemetry.addData("Left Rear's conncection info: ", leftRear.getController().getConnectionInfo());
+//        telemetry.addData("Arm's I2C Address: ", armEncoder.getI2cAddress().get8Bit());
+//        telemetry.addData("Left Rear's conncection info: ", leftRear.getController().getConnectionInfo());
         // armPositionByte = armEncoder.(0x4c);
         // armPosition = TypeConversion.unsignedByteToInt(armPositionByte);
         // telemetry.addData("Arm's position: ", "%4d", armPosition);
